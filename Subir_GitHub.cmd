@@ -1,11 +1,35 @@
 @echo off
-
 color a
-
 echo ================================
 echo   Subiendo archivos a GitHub
 echo ================================
 echo.
+
+REM Verificar si existe la carpeta .git
+if not exist ".git" (
+    echo No se encontro un repositorio Git inicializado.
+    echo.
+    set /p inicializar="Deseas inicializar un nuevo repositorio? (s/n): "
+    
+    if /i "%inicializar%"=="s" (
+        echo.
+        echo Inicializando repositorio Git...
+        git init
+        
+        echo.
+        set /p repo_url="Ingresa la URL del repositorio remoto: "
+        git remote add origin %repo_url%
+        
+        echo.
+        echo Repositorio inicializado correctamente!
+        echo.
+    ) else (
+        echo.
+        echo Operacion cancelada.
+        pause
+        exit /b
+    )
+)
 
 git add .
 
